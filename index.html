@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מדריך שלב-אחר-שלב עם פרומפטים להעתקה</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22d3ee;
+      --accent-2: #38bdf8;
+      --border: #334155;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Heebo", "Assistant", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #020617 0%, #0b1223 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    header {
+      margin-bottom: 28px;
+      padding: 20px;
+      background: rgba(17, 24, 39, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      color: #f8fafc;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .step {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .step h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      color: #f1f5f9;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      border: 1px solid var(--accent-2);
+      color: var(--accent);
+      padding: 2px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .step p {
+      margin: 0 0 14px;
+      color: #d1d5db;
+    }
+
+    .prompt-box {
+      border: 1px solid #475569;
+      background: #020617;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .prompt-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      gap: 10px;
+    }
+
+    .prompt-title {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin: 0;
+    }
+
+    .copy-btn {
+      border: 1px solid #334155;
+      background: linear-gradient(180deg, #1d4ed8, #1e40af);
+      color: #eff6ff;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: transform .1s ease, opacity .2s ease;
+    }
+
+    .copy-btn:hover { opacity: .92; }
+    .copy-btn:active { transform: scale(0.98); }
+    .copy-btn.copied {
+      background: linear-gradient(180deg, #059669, #047857);
+      border-color: #065f46;
+    }
+
+    pre {
+      margin: 0;
+      padding: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92rem;
+      color: #f8fafc;
+      direction: ltr;
+      text-align: left;
+      max-height: 280px;
+      overflow: auto;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>תוכן מסודר כשלבים + פרומפטים להעתקה</h1>
+      <p class="subtitle">כל שלב מוצג בצורה ברורה, וכל פרומפט נמצא במסגרת עם כפתור “העתקה”.</p>
+    </header>
+
+    <section class="step">
+      <h2><span class="badge">שלב 1</span> הגדרת המטרה</h2>
+      <p>התחל בהגדרה קצרה של המטרה והתוצאה שאתה רוצה לקבל מהמערכת.</p>
+      <div class="prompt-box">
+        <div class="prompt-head">
+          <p class="prompt-title">פרומפט לשלב 1</p>
+          <button class="copy-btn" data-copy-target="prompt-1">העתק</button>
+        </div>
+        <pre id="prompt-1">תן לי תוכנית עבודה ברורה להשגת המטרה שלי, מחולקת לשלבים קצרים ופרקטיים.</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2><span class="badge">שלב 2</span> פירוק למשימות</h2>
+      <p>בשלב הזה מבקשים פירוק למשימות עם סדר ביצוע ברור (מה קודם ומה אחר כך).</p>
+      <div class="prompt-box">
+        <div class="prompt-head">
+          <p class="prompt-title">פרומפט לשלב 2</p>
+          <button class="copy-btn" data-copy-target="prompt-2">העתק</button>
+        </div>
+        <pre id="prompt-2">פרק את המטרה למשימות קטנות, ותן לי סדר עדיפויות מדויק לכל משימה.</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2><span class="badge">שלב 3</span> יצירת פרומפטים מוכנים</h2>
+      <p>כאן מבקשים נוסחים מוכנים לשימוש שאפשר להעתיק ישירות.</p>
+      <div class="prompt-box">
+        <div class="prompt-head">
+          <p class="prompt-title">פרומפט לשלב 3</p>
+          <button class="copy-btn" data-copy-target="prompt-3">העתק</button>
+        </div>
+        <pre id="prompt-3">כתוב לי 5 פרומפטים קצרים ומדויקים שאוכל להשתמש בהם כדי להתקדם שלב-אחר-שלב.</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2><span class="badge">שלב 4</span> שיפור ואופטימיזציה</h2>
+      <p>אחרי שימוש ראשוני, מבקשים שיפור נוסחים כדי לקבל תוצאות טובות יותר.</p>
+      <div class="prompt-box">
+        <div class="prompt-head">
+          <p class="prompt-title">פרומפט לשלב 4</p>
+          <button class="copy-btn" data-copy-target="prompt-4">העתק</button>
+        </div>
+        <pre id="prompt-4">שפר את הפרומפטים שלי כך שיהיו קצרים יותר, ברורים יותר ומדויקים יותר לתוצאה הרצויה.</pre>
+      </div>
+    </section>
+
+    <section class="step">
+      <h2><span class="badge">שלב 5</span> בדיקה סופית</h2>
+      <p>לבסוף, מבקשים בדיקת איכות לתוצר כולל נקודות לשיפור.</p>
+      <div class="prompt-box">
+        <div class="prompt-head">
+          <p class="prompt-title">פרומפט לשלב 5</p>
+          <button class="copy-btn" data-copy-target="prompt-5">העתק</button>
+        </div>
+        <pre id="prompt-5">בצע בדיקה סופית לכל השלבים, והצע 3 שיפורים ממוקדים שיגדילו את איכות התוצאה.</pre>
+      </div>
+    </section>
+
+    <footer>
+      נבנה כך שתוכל לערוך כל טקסט ולהוסיף עוד שלבים באותה תבנית.
+    </footer>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.copy-btn');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const targetId = button.getAttribute('data-copy-target');
+        const text = document.getElementById(targetId)?.innerText ?? '';
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = button.textContent;
+          button.textContent = 'הועתק!';
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove('copied');
+          }, 1200);
+        } catch {
+          alert('לא ניתן היה להעתיק אוטומטית. נסה להעתיק ידנית.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
