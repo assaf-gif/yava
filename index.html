@@ -3,244 +3,371 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>מדריך שלב-אחר-שלב עם פרומפטים להעתקה</title>
+  <title>קורס לבניית מותג פרימיום ויצירת סרטונים ויראליים עם AI</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --accent: #22d3ee;
-      --accent-2: #38bdf8;
-      --border: #334155;
-      --success: #10b981;
+      --bg-dark: #0B0B0B;
+      --bg-light: #F7F3EA;
+      --gold: #C9A45C;
+      --white: #FFFFFF;
+      --text-dark: #171717;
+      --muted-light: #bfb8aa;
+      --muted-dark: #5b564d;
+      --radius: 20px;
+      --shadow: 0 16px 40px rgba(0,0,0,0.26);
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: "Heebo", "Assistant", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, #020617 0%, #0b1223 100%);
-      color: var(--text);
+      background: var(--bg-dark);
+      color: var(--white);
+      font-family: "Heebo", "Assistant", system-ui, -apple-system, sans-serif;
       line-height: 1.6;
+      padding-bottom: 88px;
+    }
+
+    .section {
+      padding: 56px 18px;
+    }
+
+    .section.light {
+      background: var(--bg-light);
+      color: var(--text-dark);
     }
 
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 32px 16px 64px;
+      width: min(1120px, 100%);
+      margin-inline: auto;
     }
 
-    header {
-      margin-bottom: 28px;
-      padding: 20px;
-      background: rgba(17, 24, 39, 0.75);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      backdrop-filter: blur(5px);
-    }
+    h1, h2, h3, p { margin: 0; }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-      color: #f8fafc;
-    }
+    h1 { font-size: clamp(2rem, 6vw, 3.9rem); line-height: 1.2; }
+    h2 { font-size: clamp(1.6rem, 4.7vw, 2.6rem); margin-bottom: 18px; }
+    .lead { font-size: clamp(1rem, 2.7vw, 1.22rem); color: var(--muted-light); }
+    .light .lead { color: var(--muted-dark); }
 
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .step {
-      background: rgba(17, 24, 39, 0.8);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    .step h2 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      color: #f1f5f9;
-      display: flex;
-      gap: 8px;
+    .hero {
+      display: grid;
+      gap: 24px;
       align-items: center;
     }
 
-    .badge {
-      font-size: 0.8rem;
-      border: 1px solid var(--accent-2);
-      color: var(--accent);
-      padding: 2px 10px;
-      border-radius: 999px;
-      white-space: nowrap;
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,164,92,0.25);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
     }
 
-    .step p {
-      margin: 0 0 14px;
-      color: #d1d5db;
+    .light .card {
+      background: #fff;
+      border: 1px solid rgba(201,164,92,0.42);
+      box-shadow: 0 12px 30px rgba(23,23,23,0.08);
     }
 
-    .prompt-box {
-      border: 1px solid #475569;
-      background: #020617;
-      border-radius: 10px;
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-4 { grid-template-columns: 1fr; }
+
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(130deg, #b28a44, var(--gold));
+      color: #111;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 14px 26px;
+      margin-top: 24px;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 24px rgba(201,164,92,0.35);
+    }
+
+    .cta-btn:hover { transform: translateY(-2px); }
+    .trust { margin-top: 10px; color: var(--muted-light); font-size: 0.9rem; }
+
+    .placeholder {
+      border: 1px dashed rgba(201,164,92,0.7);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      min-height: 260px;
+      color: var(--muted-light);
+      background: rgba(255,255,255,0.02);
+      padding: 12px;
+    }
+
+    .light .placeholder {
+      background: #fff;
+      color: var(--muted-dark);
+    }
+
+    .video {
+      min-height: 320px;
+      position: relative;
       overflow: hidden;
     }
 
-    .prompt-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      background: #0f172a;
-      border-bottom: 1px solid #1e293b;
-      gap: 10px;
+    .play {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: grid;
+      place-items: center;
+      background: rgba(11,11,11,0.6);
     }
 
-    .prompt-title {
-      font-size: 0.92rem;
-      color: #cbd5e1;
-      margin: 0;
+    .play::before {
+      content: "";
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-right: 0;
+      border-left: 20px solid var(--gold);
+      margin-right: -5px;
     }
 
-    .copy-btn {
-      border: 1px solid #334155;
-      background: linear-gradient(180deg, #1d4ed8, #1e40af);
-      color: #eff6ff;
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: transform .1s ease, opacity .2s ease;
-    }
-
-    .copy-btn:hover { opacity: .92; }
-    .copy-btn:active { transform: scale(0.98); }
-    .copy-btn.copied {
-      background: linear-gradient(180deg, #059669, #047857);
-      border-color: #065f46;
-    }
-
-    pre {
-      margin: 0;
+    .gold-strip {
+      background: linear-gradient(135deg, #8b6b34, var(--gold));
+      color: #111;
+      border-radius: 14px;
       padding: 14px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.92rem;
-      color: #f8fafc;
-      direction: ltr;
-      text-align: left;
-      max-height: 280px;
-      overflow: auto;
+      font-weight: 700;
+      margin-top: 18px;
+      text-align: center;
     }
 
-    footer {
-      margin-top: 24px;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .price-box {
+      border: 2px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: #fff;
+      box-shadow: 0 15px 35px rgba(201,164,92,0.2);
+    }
+
+    .price { font-size: clamp(2.1rem, 7vw, 3.2rem); font-weight: 900; color: var(--text-dark); }
+    .old-price { color: #7b756d; text-decoration: line-through; margin-bottom: 14px; }
+
+    ul { margin: 0; padding-inline: 20px; }
+    li { margin-bottom: 10px; }
+
+    .faq-item + .faq-item { margin-top: 14px; }
+    .faq-item h3 { font-size: 1.08rem; margin-bottom: 6px; }
+
+    .lead-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+      max-width: 520px;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(201,164,92,0.5);
+      padding: 14px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.04);
+      color: var(--white);
+    }
+
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(11,11,11,0.92);
+      border-top: 1px solid rgba(201,164,92,0.4);
+      padding: 10px 14px;
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .sticky-cta .cta-btn {
+      margin: 0;
+      width: 100%;
       text-align: center;
+      font-size: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.93rem;
+      color: var(--muted-light);
+      text-align: center;
+      padding: 28px 18px 10px;
+    }
+
+    @media (min-width: 780px) {
+      body { padding-bottom: 0; }
+      .hero { grid-template-columns: 1.05fr 0.95fr; }
+      .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+      .sticky-cta { display: none; }
+      .section { padding: 78px 32px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>תוכן מסודר כשלבים + פרומפטים להעתקה</h1>
-      <p class="subtitle">כל שלב מוצג בצורה ברורה, וכל פרומפט נמצא במסגרת עם כפתור “העתקה”.</p>
-    </header>
-
-    <section class="step">
-      <h2><span class="badge">שלב 1</span> הגדרת המטרה</h2>
-      <p>התחל בהגדרה קצרה של המטרה והתוצאה שאתה רוצה לקבל מהמערכת.</p>
-      <div class="prompt-box">
-        <div class="prompt-head">
-          <p class="prompt-title">פרומפט לשלב 1</p>
-          <button class="copy-btn" data-copy-target="prompt-1">העתק</button>
-        </div>
-        <pre id="prompt-1">תן לי תוכנית עבודה ברורה להשגת המטרה שלי, מחולקת לשלבים קצרים ופרקטיים.</pre>
+  <section class="section">
+    <div class="container hero">
+      <div>
+        <h1>בנה מותג שנראה מיליון דולר<br>וצור סרטונים ויראליים עם AI</h1>
+        <p class="lead" style="margin-top:16px;">גם בלי ניסיון, צוות או תקציב - שיטה פרקטית שתראה לך איך להפוך רעיון למותג שמושך תשומת לב, יוצר חיבור ומתחיל להביא תוצאות.</p>
+        <!-- Replace with purchase link -->
+        <a href="#" class="cta-btn">אני רוצה להיכנס לקורס</a>
+        <p class="trust">רכישה מאובטחת | גישה מיידית לקורס</p>
       </div>
-    </section>
+      <!-- Replace with instructor image -->
+      <div class="placeholder">תמונת מרצה<br>(Placeholder)</div>
+    </div>
+  </section>
 
-    <section class="step">
-      <h2><span class="badge">שלב 2</span> פירוק למשימות</h2>
-      <p>בשלב הזה מבקשים פירוק למשימות עם סדר ביצוע ברור (מה קודם ומה אחר כך).</p>
-      <div class="prompt-box">
-        <div class="prompt-head">
-          <p class="prompt-title">פרומפט לשלב 2</p>
-          <button class="copy-btn" data-copy-target="prompt-2">העתק</button>
-        </div>
-        <pre id="prompt-2">פרק את המטרה למשימות קטנות, ותן לי סדר עדיפויות מדויק לכל משימה.</pre>
+  <section class="section">
+    <div class="container">
+      <div class="card placeholder video">
+        <div class="play" aria-hidden="true"></div>
+        <p style="margin-top:16px; font-weight:700;">צפה בסרטון קצר שמסביר איך השיטה עובדת</p>
+        <!-- Replace with video embed -->
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="step">
-      <h2><span class="badge">שלב 3</span> יצירת פרומפטים מוכנים</h2>
-      <p>כאן מבקשים נוסחים מוכנים לשימוש שאפשר להעתיק ישירות.</p>
-      <div class="prompt-box">
-        <div class="prompt-head">
-          <p class="prompt-title">פרומפט לשלב 3</p>
-          <button class="copy-btn" data-copy-target="prompt-3">העתק</button>
-        </div>
-        <pre id="prompt-3">כתוב לי 5 פרומפטים קצרים ומדויקים שאוכל להשתמש בהם כדי להתקדם שלב-אחר-שלב.</pre>
+  <section class="section light">
+    <div class="container">
+      <h2>הסיפור שלי</h2>
+      <div class="grid grid-4" style="margin-top:20px;">
+        <article class="card">אנשים התחילו לפנות ולשאול איך קונים</article>
+        <article class="card">ישבתי מול המחשב והתחלתי לבנות מותג לבד</article>
+        <article class="card">לא הגעתי עם צוות או תקציבים גדולים</article>
+        <article class="card">זה הרגע שהבנתי: זו שיטה</article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="step">
-      <h2><span class="badge">שלב 4</span> שיפור ואופטימיזציה</h2>
-      <p>אחרי שימוש ראשוני, מבקשים שיפור נוסחים כדי לקבל תוצאות טובות יותר.</p>
-      <div class="prompt-box">
-        <div class="prompt-head">
-          <p class="prompt-title">פרומפט לשלב 4</p>
-          <button class="copy-btn" data-copy-target="prompt-4">העתק</button>
-        </div>
-        <pre id="prompt-4">שפר את הפרומפטים שלי כך שיהיו קצרים יותר, ברורים יותר ומדויקים יותר לתוצאה הרצויה.</pre>
+  <section class="section">
+    <div class="container">
+      <h2>הבעיה שאתה מכיר</h2>
+      <div class="grid grid-3" style="margin-top:20px;">
+        <article class="card">לא ברור מאיפה להתחיל</article>
+        <article class="card">זה נראה מורכב ומסובך מדי</article>
+        <article class="card">זה דורש יותר ממה שיש כרגע</article>
       </div>
-    </section>
+      <p class="gold-strip">וזה מתסכל - כי בפנים אתה יודע שיש יותר.</p>
+    </div>
+  </section>
 
-    <section class="step">
-      <h2><span class="badge">שלב 5</span> בדיקה סופית</h2>
-      <p>לבסוף, מבקשים בדיקת איכות לתוצר כולל נקודות לשיפור.</p>
-      <div class="prompt-box">
-        <div class="prompt-head">
-          <p class="prompt-title">פרומפט לשלב 5</p>
-          <button class="copy-btn" data-copy-target="prompt-5">העתק</button>
-        </div>
-        <pre id="prompt-5">בצע בדיקה סופית לכל השלבים, והצע 3 שיפורים ממוקדים שיגדילו את איכות התוצאה.</pre>
+  <section class="section light">
+    <div class="container hero">
+      <div>
+        <h2>הפתרון</h2>
+        <p class="lead">בדיוק בשביל זה יצרתי את הקורס הזה. קורס ברור, פרקטי, בלי רעש - שמלמד איך לבנות מותג חזק, ליצור נראות פרימיום, להפיק תמונות וסרטונים בעזרת AI, ולחבר את הכל למשהו שמתחיל לעבוד.</p>
       </div>
-    </section>
+      <div class="placeholder">מוקאפ קורס<br>(Placeholder)</div>
+    </div>
+  </section>
 
-    <footer>
-      נבנה כך שתוכל לערוך כל טקסט ולהוסיף עוד שלבים באותה תבנית.
-    </footer>
+  <section class="section light" style="padding-top:0;">
+    <div class="container">
+      <h2>מה מקבלים בקורס?</h2>
+      <div class="grid grid-4" style="margin-top:20px;">
+        <article class="card">קורס מלא צעד אחרי צעד</article>
+        <article class="card">פרומפטים מוכנים לעבודה מיידית</article>
+        <article class="card">תבניות ליצירת סרטונים</article>
+        <article class="card">שיטות עבודה מתוך ניסיון אמיתי</article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>למי זה מתאים?</h2>
+      <div class="grid grid-3" style="margin-top:20px;">
+        <article class="card placeholder">תמונת קהל יעד<br>למי שרוצה להתחיל לבנות מותג משלו</article>
+        <article class="card placeholder">תמונת בעלי עסקים<br>לבעלי עסקים שרוצים לשדרג נראות ותוכן</article>
+        <article class="card placeholder">תמונת חזון<br>למי שמרגיש שיש לו פוטנציאל אבל חסר לו כיוון</article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section light">
+    <div class="container">
+      <div class="price-box">
+        <h2>מחיר השקה מיוחד לזמן מוגבל</h2>
+        <p class="price">₪497</p>
+        <p class="old-price">במקום ₪997</p>
+        <ul>
+          <li>גישה מיידית לכל התכנים</li>
+          <li>עדכונים עתידיים ללא עלות נוספת</li>
+          <li>מתאים גם למי שלא יודע לעצב</li>
+        </ul>
+        <!-- Replace with purchase link -->
+        <a href="#" class="cta-btn">אני רוצה להצטרף עכשיו</a>
+        <div class="grid grid-3" style="margin-top:18px; font-weight:700; color:#4c4336;">
+          <div>ליווי ותמיכה בדרך</div>
+          <div>רכישה מאובטחת</div>
+          <div>30 יום התחייבות להחזר כספי</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>עדיין לא בטוח?</h2>
+      <p class="lead">השאר מייל וקבל טעימה מהקורס + פרומפטים לשימוש מיידי</p>
+      <form class="lead-form" action="#" method="post">
+        <!-- Replace with Rav Messer form embed code -->
+        <input type="email" placeholder="הכנס את האימייל שלך" aria-label="הכנס את האימייל שלך" />
+        <button class="cta-btn" type="submit">שלח לי עכשיו</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>תדמיין איך זה מרגיש...</h2>
+      <p class="lead">כשיש לך מותג שנראה מדויק, תוכן שאתה גאה להעלות, ונוכחות שלא מתנצלת. זה הרבה יותר מקורס. זו נקודת התחלה.</p>
+      <!-- Replace with purchase link -->
+      <a href="#" class="cta-btn">הקורס פתוח עכשיו</a>
+    </div>
+  </section>
+
+  <section class="section light">
+    <div class="container">
+      <h2>שאלות נפוצות</h2>
+      <div class="faq-item card">
+        <h3>האם צריך ניסיון קודם?</h3>
+        <p>לא. הקורס בנוי בצורה פשוטה וברורה גם למי שמתחיל מאפס.</p>
+      </div>
+      <div class="faq-item card">
+        <h3>האם צריך ציוד מיוחד?</h3>
+        <p>לא. אפשר להתחיל מהמחשב שלך ועם הכלים שמוצגים בקורס.</p>
+      </div>
+      <div class="faq-item card">
+        <h3>האם זה מתאים גם לנשים?</h3>
+        <p>כן. הקורס מיועד לנשים ולגברים כאחד.</p>
+      </div>
+      <div class="faq-item card">
+        <h3>מתי מקבלים גישה?</h3>
+        <p>מיד לאחר הרכישה.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-note">
+    הקורס מיועד לנשים ולגברים כאחד, וכל הכתוב מנוסח בלשון זכר מטעמי נוחות בלבד.
+  </footer>
+
+  <div class="sticky-cta">
+    <!-- Replace with purchase link -->
+    <a href="#" class="cta-btn">אני רוצה להיכנס לקורס</a>
   </div>
-
-  <script>
-    const buttons = document.querySelectorAll('.copy-btn');
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', async () => {
-        const targetId = button.getAttribute('data-copy-target');
-        const text = document.getElementById(targetId)?.innerText ?? '';
-
-        try {
-          await navigator.clipboard.writeText(text);
-          const original = button.textContent;
-          button.textContent = 'הועתק!';
-          button.classList.add('copied');
-          setTimeout(() => {
-            button.textContent = original;
-            button.classList.remove('copied');
-          }, 1200);
-        } catch {
-          alert('לא ניתן היה להעתיק אוטומטית. נסה להעתיק ידנית.');
-        }
-      });
-    });
-  </script>
 </body>
 </html>
